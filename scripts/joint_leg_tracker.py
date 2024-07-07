@@ -774,6 +774,8 @@ class KalmanMultiTracker:
                         new_person.pose.position.y = ps.point.y
                         yaw = math.atan2(person.vel_y, person.vel_x)
                         quaternion = tf.transformations.quaternion_from_euler(0, 0, yaw)
+                        new_person.vel_x = person.vel_x
+                        new_person.vel_y = person.vel_y
                         new_person.pose.orientation.x = quaternion[0]
                         new_person.pose.orientation.y = quaternion[1]
                         new_person.pose.orientation.z = quaternion[2]
