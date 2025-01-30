@@ -13,7 +13,13 @@ find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(leg_tracker_interfaces REQUIRED)
 find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
 find_package(OpenCV 4 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME})
@@ -33,7 +39,13 @@ ament_target_dependencies(
   detect_leg_clusters
   rclcpp
   sensor_msgs
+  geometry_msgs
+  visualization_msgs
+  nav_msgs
+  leg_tracker_interfaces
   tf2
+  tf2_geometry_msgs
+  tf2_ros
   OpenCV
 )
 
@@ -46,7 +58,13 @@ ament_target_dependencies(
   local_occupancy_grid_mapping 
   rclcpp
   sensor_msgs
+  geometry_msgs
+  visualization_msgs
+  nav_msgs
+  leg_tracker_interfaces
   tf2
+  tf2_geometry_msgs
+  tf2_ros
   OpenCV
 )
 

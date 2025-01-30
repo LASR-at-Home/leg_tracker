@@ -47,7 +47,7 @@
 #include <utility>
 #include <algorithm>
 
-#include <tf2/transform_datatypes.h>
+#include <geometry_msgs/msg/point.hpp>
 
 /** @brief A namespace containing the laser processor helper classes */
 namespace laser_processor
@@ -68,7 +68,7 @@ public:
   /**
   * @brief Return pointer to sample of index <ind>
   */
-  static Sample* Extract(int ind, const sensor_msgs::LaserScan& scan);
+  static Sample* Extract(int ind, const sensor_msgs::msg::LaserScan& scan);
 };
 
 
@@ -80,7 +80,7 @@ struct CompareSample
   /**
   * @brief The comparator allowing the creation of an ordered set of Samples
   */  
-  inline bool operator() (const Sample* a, const Sample* b)
+  inline bool operator() (const Sample* a, const Sample* b) const
   {
     return (a->index <  b->index);
   }
@@ -109,7 +109,7 @@ public:
   * @brief Get the centroid of the sample points
   * @return Centriod in (x,y,0) (z-element assumed 0)
   */
-  tf::Point getPosition();
+  geometry_msgs::msg::Point getPosition();
 };
 
 
@@ -119,7 +119,7 @@ public:
 class ScanProcessor
 {
   std::list<SampleSet*> clusters_;
-  sensor_msgs::LaserScan scan_;
+  sensor_msgs::msg::LaserScan scan_;
 
 public:
   /**
@@ -132,7 +132,7 @@ public:
   * @brief Constructor
   * @param scan Scan to be processed
   */
-  ScanProcessor(const sensor_msgs::LaserScan& scan);
+  ScanProcessor(const sensor_msgs::msg::LaserScan& scan);
 
   /**
   * @brief Destructor

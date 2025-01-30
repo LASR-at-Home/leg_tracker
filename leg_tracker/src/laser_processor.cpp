@@ -38,7 +38,7 @@
 namespace laser_processor
 {
 
-Sample* Sample::Extract(int ind, const sensor_msgs::LaserScan& scan)
+Sample* Sample::Extract(int ind, const sensor_msgs::msg::LaserScan& scan)
 {
   Sample* s = new Sample();
 
@@ -65,31 +65,36 @@ void SampleSet::clear()
 }
 
 
-tf::Point SampleSet::getPosition()
+geometry_msgs::msg::Point SampleSet::getPosition()
 {
   float x_mean = 0.0;
   float y_mean = 0.0;
+  float z = 0.0;
   for (iterator i = begin(); i != end(); ++i)
   {
     x_mean += ((*i)->x)/size();
     y_mean += ((*i)->y)/size();
   }
+  geometry_msgs::msg::Point p;
+  p.x = x_mean;
+  p.y = y_mean;
+  p.z = z;
 
-  return tf::Point (x_mean, y_mean, 0.0);
+  return p;
 }
 
 
-ScanProcessor::ScanProcessor(const sensor_msgs::LaserScan& scan) 
+ScanProcessor::ScanProcessor(const sensor_msgs::msg::LaserScan& scan) 
 {
   scan_ = scan;
 
   SampleSet* cluster = new SampleSet;
 
-  for (int i = 0; i < scan.ranges.size(); i++)
+  for (std::size_t i = 0; i < scan.ranges.size(); i++)
   {
     Sample* s = Sample::Extract(i, scan);
 
-    if (s != NULL)
+    if (s)
       cluster->insert(s);
   }
 

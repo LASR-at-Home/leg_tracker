@@ -38,7 +38,7 @@
 #include <opencv2/core.hpp>
 
 
-std::vector<float> ClusterFeatures::calcClusterFeatures(const laser_processor::SampleSet* cluster, const sensor_msgs::LaserScan& scan)
+std::vector<float> ClusterFeatures::calcClusterFeatures(const laser_processor::SampleSet* cluster, const sensor_msgs::msg::LaserScan& scan)
 {
   // Number of points
   int num_points = cluster->size();
@@ -145,7 +145,7 @@ std::vector<float> ClusterFeatures::calcClusterFeatures(const laser_processor::S
   rot_points = U * W;
 
   float linearity = 0.0;
-  for (int i = 0; i < num_points; i++)
+  for (std::size_t i = 0; i < num_points; i++)
   {
     linearity += pow(rot_points.at<float>(i, 1), 2);
   }
