@@ -7,19 +7,48 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(OpenCV 4 REQUIRED)
 
 ament_python_install_package(${PROJECT_NAME})
+
 
 include_directories(include ${rclcpp_INCLUDE_DIRS})
 link_directories(${rclcpp_LIBRARY_DIRS})
 
-add_library(${PROJECT_NAME} src/cluster_features.cpp src/laser_processor.cpp)
-target_link_libraries(${PROJECT_NAME} ${rclcpp_LIBRARIES})
+add_executable(
+  detect_leg_clusters
+  src/detect_leg_clusters.cpp
+  src/laser_processor.cpp
+  src/cluster_features.cpp
+)
+
+ament_target_dependencies(
+  detect_leg_clusters
+  rclcpp
+  sensor_msgs
+  tf2
+  OpenCV
+)
+
+add_executable(
+  local_occupancy_grid_mapping
+  src/local_occupancy_grid_mapping.cpp
+  src/laser_processor.cpp
+)
+ament_target_dependencies(
+  local_occupancy_grid_mapping 
+  rclcpp
+  sensor_msgs
+  tf2
+  OpenCV
+)
 
 install(
   DIRECTORY include/${PROJECT_NAME}/
