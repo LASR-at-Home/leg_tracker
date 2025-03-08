@@ -77,8 +77,8 @@ public:
     std::string scan_topic;
     // if (!node_.getParam("forest_file", forest_file))
     //   RCLCPP_ERROR(node_.get_logger(), "ERROR! Could not get random forest filename");
-    node_.declare_parameter("forest_file", std::string("forest.yaml"));
-    node_.declare_parameter("scan_topic", scan_topic);
+    node_.declare_parameter("forest_file", std::string("/home/jared/robocup/leg_tracker/leg_tracker/config/trained_leg_detector_res=0.33.yaml"));
+    node_.declare_parameter("scan_topic", "scan");
     node_.declare_parameter("fixed_frame", std::string("odom"));
     node_.declare_parameter("detection_threshold", -1.0);
     node_.declare_parameter("cluster_dist_euclid", 0.13);
@@ -110,7 +110,7 @@ public:
     latest_scan_header_stamp_with_tf_available_ = node_.get_clock()->now();
 
     // ROS subscribers + publishers
-    scan_sub_ = node_.create_subscription<sensor_msgs::msg::LaserScan>(scan_topic, 10, std::bind(&DetectLegClusters::laserCallback, this, std::placeholders::_1));
+    scan_sub_ = node_.create_subscription<sensor_msgs::msg::LaserScan>("scan", 10, std::bind(&DetectLegClusters::laserCallback, this, std::placeholders::_1));
     markers_pub_ = node_.create_publisher<visualization_msgs::msg::Marker>("visualization_marker", 20);
     detected_leg_clusters_pub_ = node_.create_publisher<leg_tracker_interfaces::msg::LegArray>("detected_leg_clusters", 20);
 

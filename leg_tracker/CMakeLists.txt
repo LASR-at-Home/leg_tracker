@@ -35,6 +35,13 @@ add_executable(
   src/cluster_features.cpp
 )
 
+
+
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 ament_target_dependencies(
   detect_leg_clusters
   rclcpp
@@ -54,6 +61,7 @@ add_executable(
   src/local_occupancy_grid_mapping.cpp
   src/laser_processor.cpp
 )
+
 ament_target_dependencies(
   local_occupancy_grid_mapping 
   rclcpp
@@ -67,6 +75,20 @@ ament_target_dependencies(
   tf2_ros
   OpenCV
 )
+
+install(
+  PROGRAMS
+  leg_tracker/joint_leg_tracker.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  TARGETS
+  detect_leg_clusters
+  local_occupancy_grid_mapping
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 
 install(
   DIRECTORY include/${PROJECT_NAME}/
