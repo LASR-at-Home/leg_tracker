@@ -36,6 +36,7 @@
 
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/buffer.h>
+#include <tf2_ros/buffer_interface.h>
 #include <tf2/exceptions.h>
 #include <tf2/transform_datatypes.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
@@ -175,7 +176,7 @@ private:
     // Use time from scan header
     if (use_scan_header_stamp_for_tfs_)
     {
-      tf_time = scan->header.stamp;
+      tf_time = tf2_ros::fromMsg(scan->header.stamp);
 
       try
       {
@@ -245,7 +246,7 @@ private:
                 geometry_msgs::msg::PointStamped p;
                 geometry_msgs::msg::PointStamped p_out;
                 p.point = position;
-                p.header.stamp = tf_time;
+                p.header.stamp = tf2_ros::toMsg(tf_time);
                 p.header.frame_id = scan->header.frame_id;
                 tf2::doTransform(p, p_out, t);
                 position.x = p_out.point.x;
