@@ -191,7 +191,7 @@ class KalmanMultiTracker(Node):
         self.declare_parameter("use_scan_header_stamp_for_tfs", False)
         self.declare_parameter("display_detected_people", False)
         self.declare_parameter("dist_travelled_together_to_initiate_leg_pair", 0.5)
-        self.declare_parameter("scan_topic", "scan")
+        self.declare_parameter("scan_topic", "scan_raw")
         self.declare_parameter("scan_frequency", 7.5)
         self.declare_parameter("in_free_space_threshold", 0.06)
         self.declare_parameter("confidence_percentile", 0.90)

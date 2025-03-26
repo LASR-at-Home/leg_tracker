@@ -475,14 +475,14 @@ int main (int argc, char** argv)
   list of OccupancyGridMapping. Is there a clearer way of doing this? */
 //   ros::NodeHandle nh;
 //   std::string scan_topic;
-//   nh.param("scan_topic", scan_topic, std::string("scan"));
+//   nh.param("scan_topic", scan_topic, std::string("scan_raw"));
 //   OccupancyGridMapping ogm(nh, scan_topic);
 
 //   ros::spin();
 //   return 0;
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("occupancy_grid_mapping");
-  OccupancyGridMapping ocm(*node, "scan");
+  OccupancyGridMapping ocm(*node, "scan_raw");
   rclcpp::spin(node);
   return 0;
 }
